@@ -1,0 +1,16 @@
+name: CI - Pull Request Quality & Security Gate
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  # 1. Run NPM Build and Test
+  app_ci_check:
+    name: Application Build & Test
+    uses: ./.github/workflows/build-test-ci.yml
+
+  # 2. Scan Docker Image (requires build to pass)
+  scan_image:
+    name: Run Trivy Scan
+    uses: ./.github/workflows/security-scan-ci.yml
